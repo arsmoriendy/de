@@ -9,7 +9,7 @@ import (
 	"github.com/arsmoriendy/de/pkgs/getde"
 )
 
-func ParseDeIn(paths ...string) string {
+func GetAllDeIn(paths ...string) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
 	for _, p := range paths {

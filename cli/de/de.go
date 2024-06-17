@@ -11,7 +11,7 @@ import (
 func main() {
 	home := path.Join(os.Getenv("HOME"), ".local/share/applications/")
 
-	rstring := getdefiles.ParseDeIn(
+	rstring := getdefiles.GetAllDeIn(
 		home,
 		"/usr/share/applications/",
 		"/usr/local/share/applications",
