@@ -23,7 +23,7 @@ func GetDe(entryfile os.File) string {
 		switch line[0] {
 		case '[':
 			if len(entry) != 0 {
-				rstring = rstring + parseEntry(&entry)
+				rstring = rstring + parseEntry(&entry) + "\n"
 			}
 			continue
 		case '#':
