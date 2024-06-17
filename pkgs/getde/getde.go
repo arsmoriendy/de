@@ -24,6 +24,7 @@ func GetDe(entryfile os.File) string {
 		case '[':
 			if len(entry) != 0 {
 				rstring = rstring + parseEntry(&entry) + "\n"
+				clear(entry)
 			}
 			continue
 		case '#':
