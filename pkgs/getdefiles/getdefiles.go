@@ -8,10 +8,12 @@ import (
 	"github.com/arsmoriendy/de/pkgs/getde"
 )
 
-func GetAllDeIn(format string, paths ...string) string {
+func GetAllDeIn(format string, filters *map[string]string, paths ...string) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
 	parseEntry := createParseEntry(format)
+	regMap := genRegMap(filters)
+
 	for _, p := range paths {
 		files, err := os.ReadDir(p)
 		if err != nil {
@@ -37,7 +39,7 @@ func GetAllDeIn(format string, paths ...string) string {
 				continue
 			}
 
-			rstring = rstring + getde.GetDe(*file, parseEntry)
+			rstring = rstring + getde.GetDe(*file, parseEntry, &regMap)
 		}
 	}
 

@@ -4,9 +4,14 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 )
 
-func GetDe(entryfile os.File, parseEntry func(*map[string]string) string) string {
+func GetDe(
+	entryfile os.File,
+	parseEntry func(*map[string]string) string,
+	regMap *map[string]*regexp.Regexp,
+) string {
 	rstring := ""
 
 	scanner := bufio.NewScanner(&entryfile)
@@ -21,7 +26,7 @@ func GetDe(entryfile os.File, parseEntry func(*map[string]string) string) string
 
 		switch line[0] {
 		case '[':
-			if len(entry) != 0 {
+			if len(entry) != 0 && entryMatches(&entry, regMap) {
 				rstring = rstring + parseEntry(&entry) + "\n"
 				clear(entry)
 			}
@@ -39,7 +44,9 @@ func GetDe(entryfile os.File, parseEntry func(*map[string]string) string) string
 		log.Fatalln(err)
 	}
 
-	rstring = rstring + parseEntry(&entry) + "\n"
+	if entryMatches(&entry, regMap) {
+		rstring = rstring + parseEntry(&entry) + "\n"
+	}
 
 	return rstring
 }

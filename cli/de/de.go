@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"path"
 
 	"github.com/arsmoriendy/de/pkgs/getdefiles"
 )
@@ -19,20 +16,12 @@ const usage = `Usage:
 `
 
 func main() {
-	home := path.Join(os.Getenv("HOME"), ".local/share/applications/")
-
-	if len(os.Args) < 2 {
-		log.Fatalf(
-			"Please specify output format\n%v",
-			usage,
-		)
-	}
+	opts := parseOpts()
 
 	rstring := getdefiles.GetAllDeIn(
-		os.Args[1],
-		home,
-		"/usr/share/applications/",
-		"/usr/local/share/applications",
+		opts.format,
+		&opts.filters,
+		opts.paths...,
 	)
 
 	fmt.Print(rstring)
