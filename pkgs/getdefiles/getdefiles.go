@@ -1,7 +1,6 @@
 package getdefiles
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"regexp"
@@ -9,9 +8,10 @@ import (
 	"github.com/arsmoriendy/de/pkgs/getde"
 )
 
-func GetAllDeIn(paths ...string) string {
+func GetAllDeIn(format string, paths ...string) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
+	parseEntry := createParseEntry(format)
 	for _, p := range paths {
 		files, err := os.ReadDir(p)
 		if err != nil {
@@ -42,13 +42,4 @@ func GetAllDeIn(paths ...string) string {
 	}
 
 	return rstring
-}
-
-func parseEntry(entry *map[string]string) string {
-	return fmt.Sprintf(
-		"%v=%v=%v",
-		(*entry)["Name"],
-		(*entry)["Icon"],
-		(*entry)["Exec"],
-	)
 }
