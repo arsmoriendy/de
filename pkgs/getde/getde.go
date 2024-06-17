@@ -47,7 +47,7 @@ func GetDe(entryfile os.File) string {
 		log.Fatalln(err)
 	}
 
-	rstring = rstring + parseEntry(&entry)
+	rstring = rstring + parseEntry(&entry) + "\n"
 
 	return rstring
 }

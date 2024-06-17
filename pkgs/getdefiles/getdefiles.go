@@ -36,7 +36,7 @@ func ParseDeIn(paths ...string) string {
 				continue
 			}
 
-			rstring = rstring + getde.GetDe(*file) + "\n"
+			rstring = rstring + getde.GetDe(*file)
 		}
 	}
 
