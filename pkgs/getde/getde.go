@@ -33,14 +33,6 @@ func GetDe(entryfile os.File) string {
 
 		key, value := parseLine(&line)
 
-		switch key {
-		case "Name":
-		case "Icon":
-		case "Exec":
-		default:
-			continue
-		}
-
 		entry[key] = value
 	}
 
