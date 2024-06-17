@@ -2,12 +2,11 @@ package getde
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 )
 
-func GetDe(entryfile os.File) string {
+func GetDe(entryfile os.File, parseEntry func(*map[string]string) string) string {
 	rstring := ""
 
 	scanner := bufio.NewScanner(&entryfile)
@@ -62,13 +61,4 @@ func parseLine(line *string) (string, string) {
 		}
 	}
 	return key, value
-}
-
-func parseEntry(entry *map[string]string) string {
-	return fmt.Sprintf(
-		"%v=%v=%v",
-		(*entry)["Name"],
-		(*entry)["Icon"],
-		(*entry)["Exec"],
-	)
 }

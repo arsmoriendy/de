@@ -1,6 +1,7 @@
 package getdefiles
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"regexp"
@@ -36,9 +37,18 @@ func ParseDeIn(paths ...string) string {
 				continue
 			}
 
-			rstring = rstring + getde.GetDe(*file)
+			rstring = rstring + getde.GetDe(*file, parseEntry)
 		}
 	}
 
 	return rstring
+}
+
+func parseEntry(entry *map[string]string) string {
+	return fmt.Sprintf(
+		"%v=%v=%v",
+		(*entry)["Name"],
+		(*entry)["Icon"],
+		(*entry)["Exec"],
+	)
 }
