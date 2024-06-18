@@ -1,4 +1,4 @@
-package getde
+package parsede
 
 import (
 	"bufio"
@@ -7,14 +7,15 @@ import (
 	"regexp"
 )
 
-func GetDe(
-	entryfile os.File,
-	parseEntry func(*map[string]string) string,
+// Filters, and formats a desktop entry file into a string
+func parseDeFile(
+	deFile os.File,
+	formatEntry func(*map[string]string) string,
 	regMap *map[string]*regexp.Regexp,
 ) string {
 	rstring := ""
 
-	scanner := bufio.NewScanner(&entryfile)
+	scanner := bufio.NewScanner(&deFile)
 
 	entry := make(map[string]string)
 	for scanner.Scan() {
@@ -27,7 +28,7 @@ func GetDe(
 		switch line[0] {
 		case '[':
 			if len(entry) != 0 && entryMatches(&entry, regMap) {
-				rstring = rstring + parseEntry(&entry) + "\n"
+				rstring = rstring + formatEntry(&entry) + "\n"
 				clear(entry)
 			}
 			continue
@@ -45,7 +46,7 @@ func GetDe(
 	}
 
 	if entryMatches(&entry, regMap) {
-		rstring = rstring + parseEntry(&entry) + "\n"
+		rstring = rstring + formatEntry(&entry) + "\n"
 	}
 
 	return rstring

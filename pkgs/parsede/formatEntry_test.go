@@ -1,4 +1,4 @@
-package getdefiles
+package parsede
 
 import "testing"
 
@@ -10,7 +10,7 @@ func TestSampleEntry(t *testing.T) {
 	}
 
 	format := "{Name}={Icon}={Exec}"
-	parseEntry := createParseEntry(format)
+	parseEntry := genFormatEntryFunc(format)
 	result := parseEntry(&sampleEntry)
 
 	expected := "Firefox=firefox=firefox %u"
@@ -32,7 +32,7 @@ func TestEscapedFormat(t *testing.T) {
 	}
 
 	escapedFormat := "{Name}={Icon}=\\{Exec}"
-	parseEntry := createParseEntry(escapedFormat)
+	parseEntry := genFormatEntryFunc(escapedFormat)
 	result := parseEntry(&sampleEntry)
 
 	expected := "Firefox=firefox={Exec}"

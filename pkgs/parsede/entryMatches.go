@@ -1,4 +1,4 @@
-package getde
+package parsede
 
 import "regexp"
 

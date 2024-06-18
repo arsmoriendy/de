@@ -1,7 +1,7 @@
-package getdefiles
+package parsede
 
 // replace "{key}" in format with the value of a key
-func createParseEntry(format string) func(*map[string]string) string {
+func genFormatEntryFunc(format string) func(*map[string]string) string {
 	return func(m *map[string]string) string {
 		rstring := ""
 

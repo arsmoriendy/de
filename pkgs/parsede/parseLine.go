@@ -1,4 +1,4 @@
-package getde
+package parsede
 
 func parseLine(line *string) (string, string) {
 	key := ""

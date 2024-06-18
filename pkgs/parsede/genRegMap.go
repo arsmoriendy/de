@@ -1,4 +1,4 @@
-package getdefiles
+package parsede
 
 import "regexp"
 

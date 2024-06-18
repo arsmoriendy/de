@@ -1,17 +1,15 @@
-package getdefiles
+package parsede
 
 import (
 	"os"
 	"path"
 	"regexp"
-
-	"github.com/arsmoriendy/de/pkgs/getde"
 )
 
-func GetAllDeIn(format string, filters *map[string]string, paths ...string) string {
+func ParseDeFilesIn(format string, filters *map[string]string, paths ...string) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
-	parseEntry := createParseEntry(format)
+	parseEntry := genFormatEntryFunc(format)
 	regMap := genRegMap(filters)
 
 	for _, p := range paths {
@@ -39,7 +37,7 @@ func GetAllDeIn(format string, filters *map[string]string, paths ...string) stri
 				continue
 			}
 
-			rstring = rstring + getde.GetDe(*file, parseEntry, &regMap)
+			rstring = rstring + parseDeFile(*file, parseEntry, &regMap)
 		}
 	}
 
