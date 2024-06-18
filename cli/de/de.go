@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/arsmoriendy/de/pkgs/searchde"
+	"github.com/arsmoriendy/de/pkgs/parsede"
 )
 
 const usage = `Usage:
@@ -18,7 +18,7 @@ const usage = `Usage:
 func main() {
 	opts := parseOpts()
 
-	rstring := searchde.ParseDeFilesIn(
+	rstring := parsede.ParseDeFilesIn(
 		opts.format,
 		&opts.filters,
 		opts.paths...,
