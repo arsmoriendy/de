@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"regexp"
+
+	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
 // Filters, and formats a desktop entry file into a string
@@ -36,7 +38,7 @@ func parseDeFile(
 			continue
 		}
 
-		key, value := parseLine(&line)
+		key, value := parser.ParseLine(&line)
 
 		entry[key] = value
 	}

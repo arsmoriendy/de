@@ -1,6 +1,6 @@
-package parsede
+package parser
 
-func parseLine(line *string) (string, string) {
+func ParseLine(line *string) (string, string) {
 	key := ""
 	value := ""
 	lhs := true
