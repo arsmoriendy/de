@@ -12,7 +12,7 @@ func getThemeIdx(themeDirs string) (*os.File, error) {
 	var idxFile *os.File
 	var err error = fmt.Errorf("index.theme not found in %v", themeDirs)
 
-	walkDirsStr(themeDirs, func(dir string) error {
+	walkDirsStr(themeDirs, ':', func(dir string) error {
 		iIdxFile, iErr := os.Open(path.Join(dir, "index.theme"))
 		if iErr == nil {
 			idxFile = iIdxFile
