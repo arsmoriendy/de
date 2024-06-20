@@ -50,7 +50,10 @@ func getHKV(idxFile *os.File, header string, key string) (string, error) {
 		return "", err
 	}
 
-	return "", fmt.Errorf(`Key "%v" in header "%v" not found`, key, header)
+	return "", fmt.Errorf(
+		`Cannot find key "%v" in header "%v" in file "%v"`,
+		key, header, idxFile.Name(),
+	)
 }
 
 func getHeader(line string) string {
