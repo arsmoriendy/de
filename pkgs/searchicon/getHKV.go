@@ -8,6 +8,8 @@ import (
 	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
+var hkvNotFound = fmt.Errorf("could not find the value of specified header and key in the file")
+
 // Gets a value from an index.theme file.
 //
 // HKV = Header Key Value.
@@ -51,8 +53,8 @@ func getHKV(idxFile *os.File, header string, key string) (string, error) {
 	}
 
 	return "", fmt.Errorf(
-		`Cannot find key "%v" in header "%v" in file "%v"`,
-		key, header, idxFile.Name(),
+		`with header %v, key %v, filename %v: %w`,
+		header, key, idxFile.Name(), hkvNotFound,
 	)
 }
 
