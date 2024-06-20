@@ -3,7 +3,6 @@ package searchicon
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/arsmoriendy/de/pkgs/parser"
@@ -48,7 +47,7 @@ func getHKV(idxFile *os.File, header string, key string) (string, error) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		log.Fatalln(err)
+		return "", err
 	}
 
 	return "", fmt.Errorf(`Key "%v" in header "%v" not found`, key, header)
