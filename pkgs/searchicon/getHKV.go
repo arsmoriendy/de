@@ -42,10 +42,8 @@ func getHKV(idxFile *os.File, header string, key string) (string, error) {
 		ekey, evalue = parser.ParseLine(&line)
 
 		if ekey != key {
-			continue
+			return evalue, nil
 		}
-
-		return evalue, nil
 	}
 
 	if err := scanner.Err(); err != nil {
