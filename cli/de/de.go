@@ -4,15 +4,16 @@ import (
 	"fmt"
 
 	"github.com/arsmoriendy/de/pkgs/parsede"
+	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
 func main() {
-	opts := parseOpts()
+	opts := parser.ParseOpts()
 
-	rstring := parsede.ParseDeFilesIn(
-		opts.format,
-		&opts.filters,
-		opts.paths...,
+	rstring := parsede.ParseDeFiles(
+		opts.Format,
+		&opts.Filters,
+		opts.Paths...,
 	)
 
 	fmt.Print(rstring)

@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-func ParseDeFilesIn(format string, filters *map[string]string, paths ...string) string {
+func ParseDeFiles(format string, filters *map[string]string, paths ...string) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
 	parseEntry := genFormatEntryFunc(format)
