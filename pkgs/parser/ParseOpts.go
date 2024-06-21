@@ -7,9 +7,11 @@ import (
 )
 
 type Options struct {
-	Paths   []string
-	Format  string
-	Filters map[string]string
+	Paths   []string          // -p
+	Format  string            // -f
+	Filters map[string]string // -F
+	Names   []string          // -n
+	Urls    []string          // -u
 }
 
 func ParseOpts() Options {
@@ -21,6 +23,8 @@ func ParseOpts() Options {
 			path.Join(os.Getenv("HOME"), ".local/share/applications/"),
 		},
 		Filters: map[string]string{},
+		Names:   []string{},
+		Urls:    []string{},
 	}
 
 	hasp := false // does the arguments have p
@@ -70,6 +74,24 @@ func ParseOpts() Options {
 				}
 			}
 
+			return nil
+		},
+	)
+
+	flag.Func(
+		"n",
+		"file `name` as an argument for the Exec key. Multiple instances of this flag can be omited",
+		func(s string) error {
+			ropts.Names = append(ropts.Names, s)
+			return nil
+		},
+	)
+
+	flag.Func(
+		"u",
+		"`url` as an argument for the Exec key. Multiple instances of this flag can be omited",
+		func(s string) error {
+			ropts.Urls = append(ropts.Urls, s)
 			return nil
 		},
 	)
