@@ -4,15 +4,17 @@ import (
 	"os"
 	"path"
 	"regexp"
+
+	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
-func ParseDeFiles(format string, filters *map[string]string, paths ...string) string {
+func ParseDeFiles(opts *parser.Options) string {
 	rstring := ""
 	validDF := regexp.MustCompile(`\.desktop$`)
-	parseEntry := genFormatEntryFunc(format)
-	regMap := genRegMap(filters)
+	parseEntry := genFormatEntryFunc((*opts).Format)
+	regMap := genRegMap(&(*opts).Filters)
 
-	for _, p := range paths {
+	for _, p := range (*opts).Paths {
 		files, err := os.ReadDir(p)
 		if err != nil {
 			continue
