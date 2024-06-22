@@ -30,19 +30,19 @@ func ParseExec(s string, entry *map[string]string, opts *parser.Options, filenam
 				rstring += "%"
 			case 'f':
 				if len(opts.Names) == 1 {
-					rstring += " " + opts.Names[0]
+					rstring += opts.Names[0]
 				}
 			case 'F':
 				for _, fname := range opts.Names {
-					rstring += " " + fname
+					rstring += fname
 				}
 			case 'u':
 				if len(opts.Names) == 1 {
-					rstring += " " + opts.Names[0]
+					rstring += opts.Names[0]
 				}
 			case 'U':
 				for _, url := range opts.Urls {
-					rstring += " " + url
+					rstring += url
 				}
 			case 'i':
 				icon, found := (*entry)["Icon"]
