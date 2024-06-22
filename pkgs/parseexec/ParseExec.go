@@ -71,7 +71,7 @@ func ParseExec(s string, entry *map[string]string, opts *parser.Options, filenam
 			case 'k':
 				rstring += filename
 			}
-
+			captureFieldCode = false
 		}
 	}
 
