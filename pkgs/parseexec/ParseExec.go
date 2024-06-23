@@ -9,11 +9,11 @@ import (
 	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
-func ParseExec(s string, entry *map[string]string, opts *parser.Options, filename string) string {
+func ParseExec(entry *map[string]string, opts *parser.Options, filename string) string {
 	rstring := ""
 
 	captureFieldCode := false
-	for _, c := range s {
+	for _, c := range (*entry)["Exec"] {
 		switch c {
 		// TODO: handle quoting
 		case '"':
