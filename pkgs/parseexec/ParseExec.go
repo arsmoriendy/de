@@ -39,10 +39,11 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 					rstring += fname
 				}
 			case 'u':
-				if len(opts.Names) < 1 {
+				if len(opts.Urls) < 1 {
 					break
 				}
-				rstring += opts.Names[0]
+
+				rstring += opts.Urls[0]
 			case 'U':
 				for _, url := range opts.Urls {
 					rstring += url
