@@ -22,19 +22,15 @@ func TestLowerFZero(t *testing.T) {
 
 // %f with multiple filenames
 func TestLowerFMulti(t *testing.T) {
-	entry := map[string]string{
-		"Exec": "program %f -f",
+	p := defTP
+	p.entry["Exec"] = "program %f -f"
+	p.opts.Names = []string{
+		"/example/path/1",
+		"/example/path/2",
+		"/example/path/3",
 	}
-	opts := parser.Options{
-		Names: []string{
-			"/example/path/1",
-			"/example/path/2",
-			"/example/path/3",
-		},
-	}
-	filename := ""
 
-	exec := ParseExec(&entry, &opts, filename)
+	exec := p.call()
 	exp := "program /example/path/1 -f"
 
 	if exec != exp {
@@ -48,18 +44,14 @@ func FuzzLowerF(f *testing.F) {
 	f.Add("/root/ ")
 
 	f.Fuzz(func(t *testing.T, file string) {
-		entry := map[string]string{
-			"Exec": "program %f -f",
-		}
-		opts := parser.Options{
-			Names: []string{file},
-		}
-		filename := ""
+		p := defTP
+		p.entry["Exec"] = "program %f -f"
+		p.opts.Names = []string{file}
 
-		exec := ParseExec(&entry, &opts, filename)
+		exec := p.call()
 
 		if exec != "program "+file+" -f" {
-			t.Errorf("\nRaw: \t%v\nName: \t%v\nParsed: \t%v\n", entry["Exec"], file, exec)
+			t.Errorf("\nRaw: \t%v\nName: \t%v\nParsed: \t%v\n", p.entry["Exec"], file, exec)
 		}
 	})
 }
