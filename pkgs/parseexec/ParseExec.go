@@ -30,7 +30,7 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 				rstring += "%"
 			case 'f':
 				if len(opts.Names) < 1 {
-					continue
+					break
 				}
 
 				rstring += opts.Names[0]
@@ -39,9 +39,10 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 					rstring += fname
 				}
 			case 'u':
-				if len(opts.Names) == 1 {
-					rstring += opts.Names[0]
+				if len(opts.Names) < 1 {
+					break
 				}
+				rstring += opts.Names[0]
 			case 'U':
 				for _, url := range opts.Urls {
 					rstring += url
@@ -50,7 +51,7 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 				icon, found := (*entry)["Icon"]
 
 				if !found {
-					continue
+					break
 				}
 
 				rstring += fmt.Sprintf(`--icon "%v"`, icon)
@@ -59,7 +60,7 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 				lang := os.Getenv("LANG")
 
 				if lang == "" {
-					continue
+					break
 				}
 
 				name, found := (*entry)["Name["+lang[0:2]+"]"]
