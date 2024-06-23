@@ -6,6 +6,26 @@ import (
 	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
+func TestSingleFileMulti(t *testing.T) {
+	s := "program %f -f"
+	entry := map[string]string{}
+	opts := parser.Options{
+		Names: []string{
+			"/example/path/1",
+			"/example/path/2",
+			"/example/path/3",
+		},
+	}
+	filename := ""
+
+	exec := ParseExec(s, &entry, &opts, filename)
+	exp := "program /example/path/1 -f"
+
+	if exec != exp {
+		t.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 func FuzzSingleFile(f *testing.F) {
 
 	f.Add("/example/path")
