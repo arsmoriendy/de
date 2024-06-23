@@ -61,11 +61,11 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 			minint = sizeint
 		} else {
 			minint, err = strconv.Atoi(minstr)
-		}
-		if err != nil {
-			return false, fmt.Errorf(
-				`failed to parse "MinSize" of %v in file %v: %w: %w`,
-				subdir, idxFile.Name(), err, idxFormatErr)
+			if err != nil {
+				return false, fmt.Errorf(
+					`failed to parse "MinSize" of %v in file %v: %w: %w`,
+					subdir, idxFile.Name(), err, idxFormatErr)
+			}
 		}
 
 		var maxint int
@@ -74,11 +74,11 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 			maxint = sizeint
 		} else {
 			maxint, err = strconv.Atoi(maxstr)
-		}
-		if err != nil {
-			return false, fmt.Errorf(
-				`failed to parse "MaxSize" of %v in file %v: %w: %w`,
-				subdir, idxFile.Name(), err, idxFormatErr)
+			if err != nil {
+				return false, fmt.Errorf(
+					`failed to parse "MaxSize" of %v in file %v: %w: %w`,
+					subdir, idxFile.Name(), err, idxFormatErr)
+			}
 		}
 
 		return minint <= iconsize && iconsize <= maxint, nil
@@ -89,11 +89,11 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 			thint = 2
 		} else {
 			thint, err = strconv.Atoi(thstr)
-		}
-		if err != nil {
-			return false, fmt.Errorf(
-				`failed to parse "Threshold" of %v in file %v: %w: %w`,
-				subdir, idxFile.Name(), err, idxFormatErr)
+			if err != nil {
+				return false, fmt.Errorf(
+					`failed to parse "Threshold" of %v in file %v: %w: %w`,
+					subdir, idxFile.Name(), err, idxFormatErr)
+			}
 		}
 
 		return sizeint-thint <= iconsize && iconsize <= sizeint+thint, nil
