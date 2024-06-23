@@ -81,6 +81,19 @@ func TestUpperFZero(t *testing.T) {
 	}
 }
 
+// FC = field code, i.e. %_
+func TestInvalidFC(t *testing.T) {
+	p := defTP
+	p.entry["Exec"] = "program %_ -f"
+
+	exec := p.call()
+	exp := "program  -f"
+
+	if exec != exp {
+		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 type testParams struct {
 	entry    map[string]string
 	opts     parser.Options
