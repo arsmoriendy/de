@@ -29,9 +29,11 @@ func ParseExec(s string, entry *map[string]string, opts *parser.Options, filenam
 			case '%':
 				rstring += "%"
 			case 'f':
-				if len(opts.Names) == 1 {
-					rstring += opts.Names[0]
+				if len(opts.Names) < 1 {
+					continue
 				}
+
+				rstring += opts.Names[0]
 			case 'F':
 				for _, fname := range opts.Names {
 					rstring += fname
