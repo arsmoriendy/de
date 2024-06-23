@@ -81,6 +81,18 @@ func TestUpperFZero(t *testing.T) {
 	}
 }
 
+func TestI(t *testing.T) {
+	p := defTP
+	p.entry["Exec"] = "program %i -f"
+
+	exec := p.call()
+	exp := `program --icon "program-icon" -f`
+
+	if exec != exp {
+		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 // FC = field code, i.e. %_
 func TestInvalidFC(t *testing.T) {
 	p := defTP
