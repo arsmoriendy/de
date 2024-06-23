@@ -68,6 +68,19 @@ func TestUpperF(t *testing.T) {
 	}
 }
 
+func TestUpperFZero(t *testing.T) {
+	p := defTP
+	p.entry["Exec"] = "program %F -f"
+	p.opts.Names = nil
+
+	exec := p.call()
+	exp := "program  -f"
+
+	if exec != exp {
+		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 type testParams struct {
 	entry    map[string]string
 	opts     parser.Options
