@@ -1,6 +1,7 @@
 package parseexec
 
 import (
+	"os"
 	"testing"
 
 	"github.com/arsmoriendy/de/pkgs/parser"
@@ -109,6 +110,7 @@ func TestIZero(t *testing.T) {
 func TestC(t *testing.T) {
 	p := defTP
 	p.entry["Exec"] = "program %c -f"
+	os.Setenv("LANG", "en_US.UTF-8")
 
 	exec := p.call()
 	exp := `program program-name-en -f`
