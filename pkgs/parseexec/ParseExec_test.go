@@ -27,8 +27,7 @@ func TestLowerFMulti(t *testing.T) {
 	}
 }
 
-func FuzzSingleFile(f *testing.F) {
-
+func FuzzLowerF(f *testing.F) {
 	f.Add("/example/path")
 	f.Add("/usr/local/bin/")
 	f.Add("/root/ ")
