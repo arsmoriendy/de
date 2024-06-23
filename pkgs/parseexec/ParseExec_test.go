@@ -6,7 +6,7 @@ import (
 	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
-func TestSingleFileMulti(t *testing.T) {
+func TestLowerFMulti(t *testing.T) {
 	s := "program %f -f"
 	entry := map[string]string{}
 	opts := parser.Options{
