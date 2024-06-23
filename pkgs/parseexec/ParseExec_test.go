@@ -6,6 +6,21 @@ import (
 	"github.com/arsmoriendy/de/pkgs/parser"
 )
 
+// %f with zero filenames
+func TestLowerFZero(t *testing.T) {
+	param := defTP
+	param.entry["Exec"] = "program %f -f"
+	param.opts.Names = nil
+
+	exec := ParseExec(&param.entry, &param.opts, param.filename)
+	exp := "program  -f"
+
+	if exec != exp {
+		t.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
+// %f with multiple filenames
 func TestLowerFMulti(t *testing.T) {
 	entry := map[string]string{
 		"Exec": "program %f -f",
