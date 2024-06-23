@@ -134,6 +134,18 @@ func TestCEmpty(t *testing.T) {
 	}
 }
 
+func TestK(t *testing.T) {
+	p := defTP
+	p.entry["Exec"] = "program %k -f"
+
+	exec := p.call()
+	exp := `program program.desktop -f`
+
+	if exec != exp {
+		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 // FC = field code, i.e. %_
 func TestInvalidFC(t *testing.T) {
 	p := defTP
