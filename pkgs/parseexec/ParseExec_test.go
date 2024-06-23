@@ -48,3 +48,32 @@ func FuzzLowerF(f *testing.F) {
 		}
 	})
 }
+
+type testParams struct {
+	entry    map[string]string
+	opts     parser.Options
+	filename string
+}
+
+// Default testParams.
+// Feel free to copy and override.
+var defTP = testParams{
+	entry: map[string]string{
+		"Name":     "program-name",
+		"Name[en]": "program-name-en",
+		"Icon":     "program-icon",
+		"Exec":     "program",
+	},
+	opts: parser.Options{
+		Names: []string{
+			"/dir/subdir/file",
+			"/dir/subdir/file2",
+		},
+		Urls: []string{
+			"proto://dest/path?param=foo",
+			"proto://dest2/path?param=foo",
+			"/dir/subdir/file", // file path can also be used
+		},
+	},
+	filename: "program.desktop",
+}
