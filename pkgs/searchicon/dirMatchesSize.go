@@ -20,12 +20,12 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 		scaleint = 1
 	} else {
 		scaleint, err = strconv.Atoi(scalestr)
-	}
 
-	if err != nil {
-		return false, fmt.Errorf(
-			`failed to parse "Scale" of %v in file %v: %w: %w`,
-			subdir, idxFile.Name(), err, idxFormatErr)
+		if err != nil {
+			return false, fmt.Errorf(
+				`failed to parse "Scale" of %v in file %v: %w: %w`,
+				subdir, idxFile.Name(), err, idxFormatErr)
+		}
 	}
 
 	if scaleint != iconscale {
