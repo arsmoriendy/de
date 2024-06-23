@@ -56,6 +56,18 @@ func FuzzLowerF(f *testing.F) {
 	})
 }
 
+func TestUpperF(t *testing.T) {
+	p := defTP
+	p.entry["Exec"] = "program %F -f"
+
+	exec := p.call()
+	exp := "program /dir/subdir/file /dir/subdir/file2 -f"
+
+	if exec != exp {
+		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, exec)
+	}
+}
+
 type testParams struct {
 	entry    map[string]string
 	opts     parser.Options
