@@ -12,7 +12,7 @@ func TestLowerFZero(t *testing.T) {
 	param.entry["Exec"] = "program %f -f"
 	param.opts.Names = nil
 
-	exec := ParseExec(&param.entry, &param.opts, param.filename)
+	exec := param.call()
 	exp := "program  -f"
 
 	if exec != exp {
@@ -68,6 +68,10 @@ type testParams struct {
 	entry    map[string]string
 	opts     parser.Options
 	filename string
+}
+
+func (tp testParams) call() string {
+	return ParseExec(&tp.entry, &tp.opts, tp.filename)
 }
 
 // Default testParams.
