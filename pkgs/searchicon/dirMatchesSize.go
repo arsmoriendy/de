@@ -54,7 +54,7 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 	switch typestr {
 	case "Fixed":
 		return sizeint == iconsize, nil
-	case "Scaled":
+	case "Scalable":
 		var minint int
 		minstr, err := getHKV(idxFile, subdir, "MinSize")
 		if err != nil {
