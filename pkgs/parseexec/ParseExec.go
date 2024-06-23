@@ -35,7 +35,11 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 
 				rstring += opts.Names[0]
 			case 'F':
-				for _, fname := range opts.Names {
+				for i, fname := range opts.Names {
+					if i > 0 {
+						rstring += " "
+					}
+
 					rstring += fname
 				}
 			case 'u':
@@ -45,7 +49,11 @@ func ParseExec(entry *map[string]string, opts *parser.Options, filename string) 
 
 				rstring += opts.Urls[0]
 			case 'U':
-				for _, url := range opts.Urls {
+				for i, url := range opts.Urls {
+					if i > 0 {
+						rstring += " "
+					}
+
 					rstring += url
 				}
 			case 'i':
