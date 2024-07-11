@@ -16,8 +16,12 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 	var scaleint int
 	scalestr, err := getHKV(idxFile.Name(), subdir, "Scale")
 	if err != nil {
-		// default Scale to 1 as spec if not found
-		scaleint = 1
+		if errors.Is(err, hkvNotFound) {
+			// default Scale to 1 as spec if not found
+			scaleint = 1
+		} else {
+			return false, err
+		}
 	} else {
 		scaleint, err = strconv.Atoi(scalestr)
 
