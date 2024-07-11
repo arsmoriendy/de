@@ -35,7 +35,11 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 
 	typestr, err := getHKV(idxFile.Name(), subdir, "Type")
 	if err != nil {
-		return false, nil
+		if errors.Is(err, hkvNotFound) {
+			return false, nil
+		} else {
+			return false, err
+		}
 	}
 
 	sizestr, err := getHKV(idxFile.Name(), subdir, "Size")
