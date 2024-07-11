@@ -8,7 +8,7 @@ func lookupIcon(iconname string, size string, scale string, theme string) string
 		// TODO: handle err
 	}
 
-	subdirs, err := getHKV(idxFile, "Icon Theme", "Directories")
+	subdirs, err := getHKV(idxFile.Name(), "Icon Theme", "Directories")
 	if err != nil {
 		// TODO: handle err
 	}

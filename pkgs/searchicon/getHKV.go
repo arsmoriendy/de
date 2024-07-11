@@ -13,7 +13,12 @@ var hkvNotFound = fmt.Errorf("could not find the value of specified header and k
 // Gets a value from an index.theme file.
 //
 // HKV = Header Key Value.
-func getHKV(idxFile *os.File, header string, key string) (string, error) {
+func getHKV(fn string, header string, key string) (string, error) {
+	idxFile, err := os.Open(fn)
+	if err != nil {
+		return "", err
+	}
+
 	scanner := bufio.NewScanner(idxFile)
 
 	// e = entry

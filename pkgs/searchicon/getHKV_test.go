@@ -1,21 +1,31 @@
 package searchicon
 
 import (
-	"os"
 	"testing"
 )
 
 func TestGetHKV(t *testing.T) {
-	idxFile, err := os.Open("../../test/data/sample_xdg_data_dir/icons/SampleAdwaita/index.theme")
+	// Test "Scale"
+	fn := "../../test/data/sample_xdg_data_dir/icons/SampleAdwaita/index.theme"
 	header := "scalable/devices"
-	key := "Type"
+	key := "Scale"
 
-	if err != nil {
-		t.Fatal(err)
+	value, err := getHKV(fn, header, key)
+	exp := ""
+
+	if err == hkvNotFound {
+		t.Errorf("should return error %v but doesn't", hkvNotFound)
 	}
 
-	value, err := getHKV(idxFile, header, key)
-	exp := "Scalable"
+	if value != exp {
+		t.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, value)
+	}
+
+	// Test "Type"
+	key = "Type"
+
+	value, err = getHKV(fn, header, key)
+	exp = "Scalable"
 
 	if err != nil {
 		t.Fatal(err)
