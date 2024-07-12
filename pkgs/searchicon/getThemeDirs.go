@@ -6,9 +6,8 @@ import (
 	"path"
 )
 
-// Returns colon separated dir strings
-//
-// # Returns empty string if non found
+// Checks for specified theme's directory.
+// Returns colon separated dir strings, or empty string if non found.
 //
 // WARNING: make sure baseDirs is initialized
 func getThemeDirs(themeName string) string {
