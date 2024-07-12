@@ -6,7 +6,7 @@ import (
 	"path"
 )
 
-// Don't edit directly
+// Don't edit directly. Not guaranteed to be absolute paths.
 var baseDirs string
 var isBaseDirsInit = false
 

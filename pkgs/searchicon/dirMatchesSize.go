@@ -11,6 +11,8 @@ var dirSizeMismatch = errors.New("theme subdirectory does not match the size con
 var idxFormatErr = errors.New("index.theme file has an invalid format")
 
 // Where idxFile is the index.theme file.
+//
+// subdir is not an absolute path, it is one of the headers in index.theme
 func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int) (bool, error) {
 	// if Scale != iconscale [
 	var scaleint int
