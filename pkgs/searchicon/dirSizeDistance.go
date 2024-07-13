@@ -63,7 +63,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		minsizeint, err = strconv.Atoi(minsizestr)
 		if err != nil {
 			err = fmt.Errorf("%w: %w: %w", dirSizeDistanceErr,
-				"failed to convert MinSize to int",
+				errors.New("failed to convert MinSize to int"),
 				err)
 			return 0, err
 		}
@@ -80,7 +80,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		maxsizeint, err = strconv.Atoi(maxsizestr)
 		if err != nil {
 			err = fmt.Errorf("%w: %w: %w", dirSizeDistanceErr,
-				"failed to convert MaxSize to int",
+				errors.New("failed to convert MaxSize to int"),
 				err)
 			return 0, err
 		}
