@@ -44,44 +44,58 @@ func (d DirSpec) get(key string) (string, error) {
 	return searchicon.GetHKV(d.idxFn, d.name, key)
 }
 
+// Wrapper for getting and initializing integer attributes.
+// Parameter info:
+// - a: attribute.
+// - init: wether `a` is initialized.
+// - key: key name in the index.theme file.
+func (d DirSpec) initRetI(a *int, init *bool, key string) (int, error) {
+	return initRet(a, *init, func() (int, error) {
+		strval, err := d.get(key)
+		if err != nil {
+			return 0, err
+		}
+
+		intval, err := strconv.Atoi(strval)
+		if err != nil {
+			return 0, err
+		}
+
+		*init = true
+		return intval, nil
+	})
+}
+
+// Wrapper for getting and initializing string attributes.
+// Uses the same parameters as [initRetI] (except for init).
+func (d DirSpec) initRetS(a *string, key string) (string, error) {
+	return initRet(a, *a == "", func() (string, error) { return d.get(key) })
+}
+
 func (d DirSpec) Size() (int, error) {
-	if d.sizeIn {
-		return d.size, nil
-	}
-
-	// get Size [
-	var sizeint int
-
-	sizestr, err := d.get("Size")
-	if err != nil {
-		return 0, err
-	}
-
-	sizeint, err = strconv.Atoi(sizestr)
-	if err != nil {
-		return 0, err
-	}
-	// ]
-
-	d.sizeIn = true
-	d.size = sizeint
-	return sizeint, nil
+	return d.initRetI(&d.size, &d.sizeIn, "Size")
 }
 
 func (d DirSpec) Scale() (int, error) {
-	// get Size [
-	var scaleint int
+	return d.initRetI(&d.scale, &d.scaleIn, "Scale")
+}
 
-	scalestr, err := d.get("Scale")
-	if err != nil {
-		return 0, err
-	}
+func (d DirSpec) MaxScale() (int, error) {
+	return d.initRetI(&d.maxsize, &d.maxsizeIn, "MaxSize")
+}
 
-	scaleint, err = strconv.Atoi(scalestr)
-	if err != nil {
-		return 0, err
-	}
-	// ]
+func (d DirSpec) MinSize() (int, error) {
+	return d.initRetI(&d.minsize, &d.minsizeIn, "MinSize")
+}
 
-	return idef(&(d.scale), (&d.scaleIn), scaleint), nil
+func (d DirSpec) Threshold() (int, error) {
+	return d.initRetI(&d.threshold, &d.thresholdIn, "Threshold")
+}
+
+func (d DirSpec) Context() (string, error) {
+	return d.initRetS(&d.context, "Context")
+}
+
+func (d DirSpec) Type() (string, error) {
+	return d.initRetS(&d.type_, "Type")
 }
