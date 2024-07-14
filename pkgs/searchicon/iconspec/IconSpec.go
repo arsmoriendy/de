@@ -13,6 +13,12 @@ type IconSpec struct {
 	idxFn string
 }
 
+func New(idxFn string) IconSpec {
+	return IconSpec{
+		idxFn: idxFn,
+	}
+}
+
 func (i IconSpec) get(key string) (string, error) {
 	s, err := searchicon.GetHKV(i.idxFn, "Icon Theme", key)
 	if err != nil {
