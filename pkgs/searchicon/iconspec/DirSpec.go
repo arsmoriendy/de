@@ -85,15 +85,27 @@ func (d DirSpec) Scale() (int, error) {
 }
 
 func (d DirSpec) MaxSize() (int, error) {
-	return d.initRetI(&d.maxsize, &d.maxsizeIn, "MaxSize")
+	maxsize, err := d.initRetI(&d.maxsize, &d.maxsizeIn, "MaxSize")
+	if err != nil {
+		maxsize, err = d.Size()
+	}
+	return maxsize, err
 }
 
 func (d DirSpec) MinSize() (int, error) {
-	return d.initRetI(&d.minsize, &d.minsizeIn, "MinSize")
+	minsize, err := d.initRetI(&d.maxsize, &d.maxsizeIn, "MinSize")
+	if err != nil {
+		minsize, err = d.Size()
+	}
+	return minsize, err
 }
 
 func (d DirSpec) Threshold() (int, error) {
-	return d.initRetI(&d.threshold, &d.thresholdIn, "Threshold")
+	threshold, err := d.initRetI(&d.threshold, &d.thresholdIn, "Threshold")
+	if err != nil {
+		threshold = 1
+	}
+	return threshold, nil
 }
 
 func (d DirSpec) Context() (string, error) {
