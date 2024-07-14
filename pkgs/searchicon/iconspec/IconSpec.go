@@ -1,6 +1,6 @@
 package iconspec
 
-import "github.com/arsmoriendy/de/pkgs/searchicon"
+import "github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
 
 type IconSpec struct {
 	name              string
