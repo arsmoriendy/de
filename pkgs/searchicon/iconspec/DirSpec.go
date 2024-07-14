@@ -84,7 +84,7 @@ func (d DirSpec) Scale() (int, error) {
 	return scale, nil
 }
 
-func (d DirSpec) MaxScale() (int, error) {
+func (d DirSpec) MaxSize() (int, error) {
 	return d.initRetI(&d.maxsize, &d.maxsizeIn, "MaxSize")
 }
 
