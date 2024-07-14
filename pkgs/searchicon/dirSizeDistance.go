@@ -6,13 +6,15 @@ import (
 	"math"
 	"os"
 	"strconv"
+
+	"github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
 )
 
 var dirSizeDistanceErr error = errors.New("Coultn't determine directory size distance")
 
 func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale int) (int, error) {
 	// get Type [
-	typestr, err := GetHKV(idxFile.Name(), subdir, "Type")
+	typestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Type")
 	if err != nil {
 		return 0, dirSizeDistanceErr
 	}
@@ -21,7 +23,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 	// get Scale [
 	var scaleint int
 
-	scalestr, err := GetHKV(idxFile.Name(), subdir, "Scale")
+	scalestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Scale")
 	if err == nil {
 		scaleint, err = strconv.Atoi(scalestr)
 	}
@@ -36,7 +38,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// get Size [
 		var sizeint int
 
-		sizestr, err := GetHKV(idxFile.Name(), subdir, "Size")
+		sizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Size")
 		if err != nil {
 			err = fmt.Errorf("%w: %w", dirSizeDistanceErr, err)
 			return 0, err
@@ -55,7 +57,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// get MinSize [
 		var minsizeint int
 
-		minsizestr, err := GetHKV(idxFile.Name(), subdir, "MinSize")
+		minsizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MinSize")
 		if err != nil {
 			break
 		}
@@ -72,7 +74,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// get MaxSize [
 		var maxsizeint int
 
-		maxsizestr, err := GetHKV(idxFile.Name(), subdir, "MaxSize")
+		maxsizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MaxSize")
 		if err != nil {
 			break
 		}
@@ -96,7 +98,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 
 	case "Threshold":
 		// get Size [
-		sizestr, err := GetHKV(idxFile.Name(), subdir, "Size")
+		sizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Size")
 		if err != nil {
 			err = fmt.Errorf("%w: %w", dirSizeDistanceErr, err)
 			return 0, err
@@ -110,7 +112,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// ]
 
 		// get Threshold {
-		thresholdstr, err := GetHKV(idxFile.Name(), subdir, "Threshold")
+		thresholdstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Threshold")
 		if err != nil {
 			err = fmt.Errorf("%w: %w: %w", dirSizeDistanceErr,
 				errors.New("cannot find Threshold value"),
@@ -130,7 +132,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// get MinSize [
 		var minsizeint int
 
-		minsizestr, err := GetHKV(idxFile.Name(), subdir, "MinSize")
+		minsizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MinSize")
 		if err != nil {
 			break
 		}
@@ -147,7 +149,7 @@ func dirSizeDistance(idxFile *os.File, subdir string, iconsize int, iconscale in
 		// get MaxSize [
 		var maxsizeint int
 
-		maxsizestr, err := GetHKV(idxFile.Name(), subdir, "MaxSize")
+		maxsizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MaxSize")
 		if err != nil {
 			break
 		}

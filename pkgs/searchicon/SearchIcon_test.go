@@ -4,6 +4,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
 )
 
 const iconname = "firefox"
@@ -33,7 +35,7 @@ func TestSearchIcon(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	inherits, err := GetHKV(idxFile.Name(), "Icon Theme", "Inherits")
+	inherits, err := searchicon.GetHKV(idxFile.Name(), "Icon Theme", "Inherits")
 	if err != nil {
 		t.Fatal(err)
 	}

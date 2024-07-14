@@ -4,6 +4,8 @@ import (
 	"io/fs"
 	"os"
 	"path"
+
+	"github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
 )
 
 // iconname does not include the file extension (e.g. "icon" not "icon.svg")
@@ -15,13 +17,13 @@ func lookupIcon(iconname string, size int, scale int, theme string) (string, err
 		return "", err
 	}
 
-	subdirs, err := GetHKV(idxFile.Name(), "Icon Theme", "Directories")
+	subdirs, err := searchicon.GetHKV(idxFile.Name(), "Icon Theme", "Directories")
 	if err != nil {
 		return "", err
 	}
 
 	// Append directories listed in ScaledDirectories if any for backwards compatibility
-	scaledSubdirs, err := GetHKV(idxFile.Name(), "Icon Theme", "ScaledDirectories")
+	scaledSubdirs, err := searchicon.GetHKV(idxFile.Name(), "Icon Theme", "ScaledDirectories")
 	if err == nil {
 		subdirs += "," + scaledSubdirs
 	}

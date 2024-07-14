@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
 )
 
 var dirSizeMismatch = errors.New("theme subdirectory does not match the size constraint specified.")
@@ -16,9 +18,9 @@ var idxFormatErr = errors.New("index.theme file has an invalid format")
 func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int) (bool, error) {
 	// if Scale != iconscale [
 	var scaleint int
-	scalestr, err := GetHKV(idxFile.Name(), subdir, "Scale")
+	scalestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Scale")
 	if err != nil {
-		if errors.Is(err, HKVNotFound) {
+		if errors.Is(err, searchicon.HKVNotFound) {
 			// default Scale to 1 as spec if not found
 			scaleint = 1
 		} else {
@@ -39,16 +41,16 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 	}
 	// ]
 
-	typestr, err := GetHKV(idxFile.Name(), subdir, "Type")
+	typestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Type")
 	if err != nil {
-		if errors.Is(err, HKVNotFound) {
+		if errors.Is(err, searchicon.HKVNotFound) {
 			return false, nil
 		} else {
 			return false, err
 		}
 	}
 
-	sizestr, err := GetHKV(idxFile.Name(), subdir, "Size")
+	sizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Size")
 	if err != nil {
 		return false, fmt.Errorf(
 			`missing "Size" key of %v in file %v: %w`,
@@ -66,7 +68,7 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 		return sizeint == iconsize, nil
 	case "Scalable":
 		var minint int
-		minstr, err := GetHKV(idxFile.Name(), subdir, "MinSize")
+		minstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MinSize")
 		if err != nil {
 			minint = sizeint
 		} else {
@@ -79,7 +81,7 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 		}
 
 		var maxint int
-		maxstr, err := GetHKV(idxFile.Name(), subdir, "MaxSize")
+		maxstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MaxSize")
 		if err != nil {
 			maxint = sizeint
 		} else {
@@ -94,7 +96,7 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 		return minint <= iconsize && iconsize <= maxint, nil
 	case "Threshold":
 		var thint int
-		thstr, err := GetHKV(idxFile.Name(), subdir, "Threshold")
+		thstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Threshold")
 		if err != nil {
 			thint = 2
 		} else {
