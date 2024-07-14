@@ -22,15 +22,6 @@ func (i IconSpec) get(key string) (string, error) {
 	return s, nil
 }
 
-func sdef(s *string, def string) string {
-	if *s != "" {
-		return *s
-	}
-
-	*s = def
-	return def
-}
-
 func (i IconSpec) Name() (string, error) {
 	name, err := i.get("Name")
 	return sdef(&(i.name), name), err
