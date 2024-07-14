@@ -33,7 +33,7 @@ func TestSearchIcon(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	inherits, err := getHKV(idxFile.Name(), "Icon Theme", "Inherits")
+	inherits, err := GetHKV(idxFile.Name(), "Icon Theme", "Inherits")
 	if err != nil {
 		t.Fatal(err)
 	}

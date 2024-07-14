@@ -10,11 +10,11 @@ func TestGetHKV(t *testing.T) {
 	header := "scalable/devices"
 	key := "Scale"
 
-	value, err := getHKV(fn, header, key)
+	value, err := GetHKV(fn, header, key)
 	exp := ""
 
-	if err == hkvNotFound {
-		t.Errorf("should return error %v but doesn't", hkvNotFound)
+	if err == HKVNotFound {
+		t.Errorf("should return error %v but doesn't", HKVNotFound)
 	}
 
 	if value != exp {
@@ -24,7 +24,7 @@ func TestGetHKV(t *testing.T) {
 	// Test "Type"
 	key = "Type"
 
-	value, err = getHKV(fn, header, key)
+	value, err = GetHKV(fn, header, key)
 	exp = "Scalable"
 
 	if err != nil {

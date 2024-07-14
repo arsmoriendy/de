@@ -15,13 +15,13 @@ func lookupIcon(iconname string, size int, scale int, theme string) (string, err
 		return "", err
 	}
 
-	subdirs, err := getHKV(idxFile.Name(), "Icon Theme", "Directories")
+	subdirs, err := GetHKV(idxFile.Name(), "Icon Theme", "Directories")
 	if err != nil {
 		return "", err
 	}
 
 	// Append directories listed in ScaledDirectories if any for backwards compatibility
-	scaledSubdirs, err := getHKV(idxFile.Name(), "Icon Theme", "ScaledDirectories")
+	scaledSubdirs, err := GetHKV(idxFile.Name(), "Icon Theme", "ScaledDirectories")
 	if err == nil {
 		subdirs += "," + scaledSubdirs
 	}
