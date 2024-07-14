@@ -28,38 +28,32 @@ func (i IconSpec) get(key string) (string, error) {
 	return s, nil
 }
 
-func (i IconSpec) Name() (string, error) {
-	a := &i.name
-	key := "Name"
+// Wrapper for getting and initializing string attributes.
+// Uses the same parameters as [DirSpec.initRetI] (except for init).
+func (i IconSpec) initRetS(a *string, key string) (string, error) {
 	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+}
+
+func (i IconSpec) Name() (string, error) {
+	return i.initRetS(&i.name, "Name")
 }
 
 func (i IconSpec) Comment() (string, error) {
-	a := &i.comment
-	key := "Comment"
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return i.initRetS(&i.comment, "Comment")
 }
 
 func (i IconSpec) Inherits() (string, error) {
-	a := &i.inherits
-	key := "Inherits"
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return i.initRetS(&i.inherits, "Inherits")
 }
 
 func (i IconSpec) Directories() (string, error) {
-	a := &i.directories
-	key := "Directories"
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return i.initRetS(&i.directories, "Directories")
 }
 
 func (i IconSpec) ScaledDirectories() (string, error) {
-	a := &i.scaledDirectories
-	key := "ScaledDirectories"
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return i.initRetS(&i.scaledDirectories, "ScaledDirectories")
 }
 
 func (i IconSpec) Example() (string, error) {
-	a := &i.example
-	key := "Example"
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return i.initRetS(&i.example, "Example")
 }
