@@ -11,5 +11,5 @@ func initRet[T string | int](a *T, init bool, initv func() (T, error)) (T, error
 	if err == nil {
 		*a = v
 	}
-	return *a, nil
+	return *a, err
 }
