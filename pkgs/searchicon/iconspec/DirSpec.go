@@ -76,12 +76,12 @@ func (d DirSpec) Size() (int, error) {
 	return d.initRetI(&d.size, &d.sizeIn, "Size")
 }
 
-func (d DirSpec) Scale() (int, error) {
+func (d DirSpec) Scale() int {
 	scale, err := d.initRetI(&d.scale, &d.scaleIn, "Scale")
 	if err != nil {
-		scale = 1 // default
+		return 1
 	}
-	return scale, nil
+	return scale
 }
 
 func (d DirSpec) MaxSize() (int, error) {
@@ -100,12 +100,12 @@ func (d DirSpec) MinSize() (int, error) {
 	return minsize, err
 }
 
-func (d DirSpec) Threshold() (int, error) {
+func (d DirSpec) Threshold() int {
 	threshold, err := d.initRetI(&d.threshold, &d.thresholdIn, "Threshold")
 	if err != nil {
-		threshold = 1
+		return 2
 	}
-	return threshold, nil
+	return threshold
 }
 
 func (d DirSpec) Context() (string, error) {
