@@ -29,31 +29,37 @@ func (i IconSpec) get(key string) (string, error) {
 }
 
 func (i IconSpec) Name() (string, error) {
-	name, err := i.get("Name")
-	return sdef(&(i.name), name), err
+	a := i.name
+	key := "Name"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) Comment() (string, error) {
-	comment, err := i.get("Comment")
-	return sdef(&(i.comment), comment), err
+	a := i.comment
+	key := "Comment"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) Inherits() (string, error) {
-	inherits, err := i.get("Inherits")
-	return sdef(&(i.inherits), inherits), err
+	a := i.inherits
+	key := "Inherits"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) Directories() (string, error) {
-	directories, err := i.get("Directories")
-	return sdef(&(i.directories), directories), err
+	a := i.directories
+	key := "Directories"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) ScaledDirectories() (string, error) {
-	scaledDirectories, err := i.get("ScaledDirectories")
-	return sdef(&(i.scaledDirectories), scaledDirectories), err
+	a := i.scaledDirectories
+	key := "ScaledDirectories"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) Example() (string, error) {
-	example, err := i.get("Example")
-	return sdef(&(i.example), example), err
+	a := i.example
+	key := "Example"
+	return initRet(&a, a == "", func() (string, error) { return i.get(key) })
 }
