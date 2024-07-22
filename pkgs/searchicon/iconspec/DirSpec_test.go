@@ -15,17 +15,19 @@ func TestDirSpec(t *testing.T) {
 	ds := iconspec.NewDir(idxFn, subdir)
 
 	// Size
-	if err := okasexp(ds.Size, 128); err != nil {
-		t.Fatal(err)
-	}
+	fataliferr(t, okasexp(ds.Size, 128))
 
 	// Scale
-	if err := asexp(ds.Scale(), 1); err != nil {
+	fataliferr(t, asexp(ds.Scale(), 1))
+}
+
+func fataliferr(t *testing.T, err error) {
+	if err != nil {
 		t.Fatal(err)
 	}
 }
 
-/// *As expected*. Checks if `in` is the same as `exp`.
+// *As expected*. Checks if `in` is the same as `exp`.
 func asexp[T comparable](in T, exp T) error {
 	if in != exp {
 		return fmt.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, in)
@@ -34,8 +36,8 @@ func asexp[T comparable](in T, exp T) error {
 	return nil
 }
 
-/// *Ok(no errors) and as expected*.
-/// Wrapper for handling `f`'s error and running asexp on it's return value.
+// *Ok(no errors) and as expected*.
+// Wrapper for handling `f`'s error and running asexp on it's return value.
 func okasexp[T comparable](f func() (T, error), exp T) error {
 	in, err := f()
 
