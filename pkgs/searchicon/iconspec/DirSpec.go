@@ -69,7 +69,7 @@ func (d DirSpec) initRetI(a *int, init *bool, key string) (int, error) {
 // Wrapper for getting and initializing string attributes.
 // Uses the same parameters as [initRetI] (except for init).
 func (d DirSpec) initRetS(a *string, key string) (string, error) {
-	return initRet(a, *a == "", func() (string, error) { return d.get(key) })
+	return initRet(a, *a != "", func() (string, error) { return d.get(key) })
 }
 
 func (d DirSpec) Size() (int, error) {

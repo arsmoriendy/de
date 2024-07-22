@@ -31,7 +31,7 @@ func (i IconSpec) get(key string) (string, error) {
 // Wrapper for getting and initializing string attributes.
 // Uses the same parameters as [DirSpec.initRetI] (except for init).
 func (i IconSpec) initRetS(a *string, key string) (string, error) {
-	return initRet(a, *a == "", func() (string, error) { return i.get(key) })
+	return initRet(a, *a != "", func() (string, error) { return i.get(key) })
 }
 
 func (i IconSpec) Name() (string, error) {
