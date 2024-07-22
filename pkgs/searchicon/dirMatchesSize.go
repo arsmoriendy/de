@@ -2,11 +2,10 @@ package searchicon
 
 import (
 	"errors"
-	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/arsmoriendy/de/pkgs/searchicon/gethkv"
+	"github.com/arsmoriendy/de/pkgs/searchicon/iconspec"
 )
 
 var dirSizeMismatch = errors.New("theme subdirectory does not match the size constraint specified.")
@@ -16,32 +15,17 @@ var idxFormatErr = errors.New("index.theme file has an invalid format")
 //
 // subdir is not an absolute path, it is one of the headers in index.theme
 func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int) (bool, error) {
+	ds := iconspec.NewDir(idxFile.Name(), subdir)
+
 	// if Scale != iconscale [
-	var scaleint int
-	scalestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Scale")
-	if err != nil {
-		if errors.Is(err, searchicon.HKVNotFound) {
-			// default Scale to 1 as spec if not found
-			scaleint = 1
-		} else {
-			return false, err
-		}
-	} else {
-		scaleint, err = strconv.Atoi(scalestr)
+	scale := ds.Scale()
 
-		if err != nil {
-			return false, fmt.Errorf(
-				`failed to parse "Scale" of %v in file %v: %w: %w`,
-				subdir, idxFile.Name(), err, idxFormatErr)
-		}
-	}
-
-	if scaleint != iconscale {
+	if scale != iconscale {
 		return false, nil
 	}
 	// ]
 
-	typestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Type")
+	type_, err := ds.Type()
 	if err != nil {
 		if errors.Is(err, searchicon.HKVNotFound) {
 			return false, nil
@@ -50,65 +34,30 @@ func dirMatchesSize(idxFile *os.File, subdir string, iconsize int, iconscale int
 		}
 	}
 
-	sizestr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Size")
+	size, err := ds.Size()
 	if err != nil {
-		return false, fmt.Errorf(
-			`missing "Size" key of %v in file %v: %w`,
-			subdir, idxFile.Name(), idxFormatErr)
-	}
-	sizeint, err := strconv.Atoi(sizestr)
-	if err != nil {
-		return false, fmt.Errorf(
-			`failed to parse "Size" of %v in file %v: %w: %w`,
-			subdir, idxFile.Name(), err, idxFormatErr)
+		return false, err
 	}
 
-	switch typestr {
+	switch type_ {
 	case "Fixed":
-		return sizeint == iconsize, nil
+		return size == iconsize, nil
 	case "Scalable":
-		var minint int
-		minstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MinSize")
+		minsize, err := ds.MinSize()
 		if err != nil {
-			minint = sizeint
-		} else {
-			minint, err = strconv.Atoi(minstr)
-			if err != nil {
-				return false, fmt.Errorf(
-					`failed to parse "MinSize" of %v in file %v: %w: %w`,
-					subdir, idxFile.Name(), err, idxFormatErr)
-			}
+			return false, err
 		}
 
-		var maxint int
-		maxstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "MaxSize")
+		maxsize, err := ds.MaxSize()
 		if err != nil {
-			maxint = sizeint
-		} else {
-			maxint, err = strconv.Atoi(maxstr)
-			if err != nil {
-				return false, fmt.Errorf(
-					`failed to parse "MaxSize" of %v in file %v: %w: %w`,
-					subdir, idxFile.Name(), err, idxFormatErr)
-			}
+			return false, err
 		}
 
-		return minint <= iconsize && iconsize <= maxint, nil
+		return minsize <= iconsize && iconsize <= maxsize, nil
 	case "Threshold":
-		var thint int
-		thstr, err := searchicon.GetHKV(idxFile.Name(), subdir, "Threshold")
-		if err != nil {
-			thint = 2
-		} else {
-			thint, err = strconv.Atoi(thstr)
-			if err != nil {
-				return false, fmt.Errorf(
-					`failed to parse "Threshold" of %v in file %v: %w: %w`,
-					subdir, idxFile.Name(), err, idxFormatErr)
-			}
-		}
+		threshold := ds.Threshold()
 
-		return sizeint-thint <= iconsize && iconsize <= sizeint+thint, nil
+		return size-threshold <= iconsize && iconsize <= size+threshold, nil
 	}
 
 	return false, nil
