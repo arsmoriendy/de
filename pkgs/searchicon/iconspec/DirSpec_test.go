@@ -19,6 +19,21 @@ func TestDirSpec(t *testing.T) {
 
 	// Scale
 	fataliferr(t, asexp(ds.Scale(), 1))
+
+	// Context
+	fataliferr(t, okasexp(ds.Context, "Devices"))
+
+	// Type
+	fataliferr(t, okasexp(ds.Type, "Scalable"))
+
+	// MaxSize
+	fataliferr(t, okasexp(ds.MaxSize, 512))
+
+	// MinSize
+	fataliferr(t, okasexp(ds.MinSize, 8))
+
+	// Threshold
+	fataliferr(t, asexp(ds.Threshold(), 2))
 }
 
 func fataliferr(t *testing.T, err error) {
