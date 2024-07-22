@@ -93,7 +93,7 @@ func (d DirSpec) MaxSize() (int, error) {
 }
 
 func (d DirSpec) MinSize() (int, error) {
-	minsize, err := d.initRetI(&d.maxsize, &d.maxsizeIn, "MinSize")
+	minsize, err := d.initRetI(&d.minsize, &d.minsizeIn, "MinSize")
 	if err != nil {
 		minsize, err = d.Size()
 	}
