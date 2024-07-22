@@ -1,6 +1,7 @@
 package iconspec_test
 
 import (
+	"fmt"
 	"path/filepath"
 	"testing"
 
@@ -13,26 +14,34 @@ func TestDirSpec(t *testing.T) {
 
 	ds := iconspec.NewDir(idxFn, subdir)
 
-	// Size check {
-	size, err := ds.Size()
-	if err != nil {
+	// Size
+	if err := okasexp(ds.Size, 128); err != nil {
 		t.Fatal(err)
 	}
 
-	exp := 128
-
-	if size != exp {
-		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, size)
+	// Scale
+	if err := asexp(ds.Scale(), 1); err != nil {
+		t.Fatal(err)
 	}
-	// }
+}
 
-	// Scale check {
-	scale := ds.Scale()
-
-	exp = 1
-
-	if scale != exp {
-		t.Fatalf("\nExpected:\t%v\nGot Result:\t%v", exp, scale)
+/// *As expected*. Checks if `in` is the same as `exp`.
+func asexp[T comparable](in T, exp T) error {
+	if in != exp {
+		return fmt.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, in)
 	}
-	// }
+
+	return nil
+}
+
+/// *Ok(no errors) and as expected*.
+/// Wrapper for handling `f`'s error and running asexp on it's return value.
+func okasexp[T comparable](f func() (T, error), exp T) error {
+	in, err := f()
+
+	if err != nil {
+		return err
+	}
+
+	return asexp(in, exp)
 }
