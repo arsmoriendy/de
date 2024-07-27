@@ -31,3 +31,12 @@ func OkAsExp[T comparable](f func() (T, error), exp T) error {
 
 	return AsExp(in, exp)
 }
+
+// AsExp for custom comparable types
+func GenericAsExp[T interface{}](in T, exp T, comp bool) error {
+	if !comp {
+		return fmt.Errorf("\nExpected:\t%v\nGot Result:\t%v", exp, in)
+	}
+
+	return nil
+}
