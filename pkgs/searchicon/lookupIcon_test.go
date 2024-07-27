@@ -1,6 +1,7 @@
 package searchicon
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"testing"
@@ -14,15 +15,27 @@ func TestLookupIcon(t *testing.T) {
 	os.Setenv("XDG_DATA_DIRS", xdgDataDirs)
 	initBaseDirs()
 
+	theme := "SampleAdwaita"
+
 	th.FatalIfErr(t, th.OkAsExp(func() (string, error) {
 		return lookupIcon(
 			"audio-volume-low-symbolic",
 			128,
 			1,
-			"SampleAdwaita",
+			theme,
 		)
 	}, filepath.Join(
 		xdgDataDirs,
 		"icons/SampleAdwaita/symbolic/status/audio-volume-low-symbolic.svg",
 	)))
+
+	// Test unavailable icon, should fail
+	_, err := lookupIcon(
+		"example-unavailable-icon-name",
+		128,
+		1,
+		theme)
+
+	th.FatalIfErr(t, th.GenericAsExp(err, IconNotFound, errors.Is(err, IconNotFound)))
+
 }
