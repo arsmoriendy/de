@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"flag"
@@ -6,21 +6,21 @@ import (
 	"path"
 )
 
-type options struct {
-	paths   []string
-	format  string
-	filters map[string]string
+type Options struct {
+	Paths   []string
+	Format  string
+	Filters map[string]string
 }
 
-func parseOpts() options {
+func ParseOpts() Options {
 	// defaults for Func flags
-	ropts := options{
-		paths: []string{
+	ropts := Options{
+		Paths: []string{
 			"/usr/share/applications/",
 			"/usr/local/share/applications/",
 			path.Join(os.Getenv("HOME"), ".local/share/applications/"),
 		},
-		filters: map[string]string{},
+		Filters: map[string]string{},
 	}
 
 	hasp := false // does the arguments have p
@@ -30,18 +30,18 @@ func parseOpts() options {
 		func(s string) error {
 			// clear default
 			if !hasp {
-				ropts.paths = nil
+				ropts.Paths = nil
 				hasp = true
 			}
 
-			ropts.paths = append(ropts.paths, s)
+			ropts.Paths = append(ropts.Paths, s)
 
 			return nil
 		},
 	)
 
 	flag.StringVar(
-		&ropts.format,
+		&ropts.Format,
 		"f",
 		"{Name}={Icon}={Exec}",
 		"output `format`. {} will be replaced with the value of the key",
@@ -49,7 +49,7 @@ func parseOpts() options {
 
 	flag.Func(
 		"F",
-                "regexp filters to match each entry with. Multiple instances of this flag can be omited. Format: \"`Key:RegexpValue`\" (RegexpValue syntax: https://pkg.go.dev/regexp/syntax)",
+		"regexp filters to match each entry with. Multiple instances of this flag can be omited. Format: \"`Key:RegexpValue`\" (RegexpValue syntax: https://pkg.go.dev/regexp/syntax)",
 		func(s string) error {
 			key := ""
 			getkey := true
@@ -66,7 +66,7 @@ func parseOpts() options {
 				if getkey {
 					key += c
 				} else {
-					ropts.filters[key] += c
+					ropts.Filters[key] += c
 				}
 			}
 
