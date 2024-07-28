@@ -25,6 +25,10 @@ func findIconHelper(icon string, size int, scale int, theme string) (string, err
 	}
 
 	walkDirsStr(parents, ',', func(theme string) error {
+		if theme == "hicolor" {
+			return nil
+		}
+
 		filename, err = findIconHelper(icon, size, scale, theme)
 		if err == nil {
 			return fs.SkipAll
