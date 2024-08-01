@@ -6,7 +6,8 @@ import (
 	"path"
 )
 
-// Lookup icon regardless of size or scale
+// Lookup icon regardless of size or scale.
+// basenames is the directories inside a theme (listed in index.theme)
 func lookupFallbackIcon(iconname string, basenames string) (string, error) {
 	ricon := ""
 	walkDirsStr(basenames, ',', func(dir string) error {
