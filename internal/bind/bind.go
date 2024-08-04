@@ -2,8 +2,8 @@ package bind
 
 import "reflect"
 
-// Unsafe and probably slow, but it calls function f with arguments args and returns the values
-func Bind[T any](f interface{}, args ...interface{}) (T, error) {
+// Unsafe and probably slow, but it calls function f with arguments args and returns a callback function that returns the values
+func Bind[T any](f interface{}, args ...interface{}) func() (T, error) {
 	rf := reflect.ValueOf(f)
 
 	// slow
@@ -13,5 +13,7 @@ func Bind[T any](f interface{}, args ...interface{}) (T, error) {
 	}
 
 	res := rf.Call(in)
-	return res[0].Interface().(T), res[1].Interface().(error)
+	return func() (T, error) {
+		return res[0].Interface().(T), res[1].Interface().(error)
+	}
 }
