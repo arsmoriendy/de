@@ -17,7 +17,11 @@ func TestLookupIcon(t *testing.T) {
 
 	theme := "SampleAdwaita"
 
-	th.FatalIfErr(t, th.OkAsExp(func() (string, error) {
+	ths := th.Thelper{
+		Tptr: t,
+	}
+
+	ths.FatalIfErr(th.OkAsExp(func() (string, error) {
 		return lookupIcon(
 			"audio-volume-low-symbolic",
 			128,
@@ -36,6 +40,6 @@ func TestLookupIcon(t *testing.T) {
 		1,
 		theme)
 
-	th.FatalIfErr(t, th.GenericAsExp(err, IconNotFound, errors.Is(err, IconNotFound)))
+	ths.FatalIfErr(th.GenericAsExp(err, IconNotFound, errors.Is(err, IconNotFound)))
 
 }
