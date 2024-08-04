@@ -14,6 +14,9 @@ func Bind[T any](f interface{}, args ...interface{}) func() (T, error) {
 
 	res := rf.Call(in)
 	return func() (T, error) {
+		if res[1].IsNil() {
+			return res[0].Interface().(T), nil
+		}
 		return res[0].Interface().(T), res[1].Interface().(error)
 	}
 }
