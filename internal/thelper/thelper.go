@@ -5,9 +5,13 @@ import (
 	"testing"
 )
 
-func FatalIfErr(t *testing.T, err error) {
+type Thelper struct {
+	Tptr *testing.T
+}
+
+func (th Thelper) FatalIfErr(err error) {
 	if err != nil {
-		t.Fatal(err)
+		th.Tptr.Fatal(err)
 	}
 }
 
